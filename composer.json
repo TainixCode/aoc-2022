@@ -1,0 +1,17 @@
+{
+    "name": "tainix/aoc-2022",
+    "description": "Resolution des challenges Advent Of Code 2022",
+    "type": "project",
+    "require": {
+        "php": ">=8.1",
+        "pestphp/pest": "1.*",
+        "phpstan/phpstan": "1.*",
+        "illuminate/collections": "*"
+    },
+    "autoload": {
+        "files": ["Reader.php"],
+        "psr-4" : {
+            "Solutions\\" : "solutions/"
+        }
+    }
+}
