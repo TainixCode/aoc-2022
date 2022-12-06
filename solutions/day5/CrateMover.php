@@ -7,8 +7,14 @@ class CrateMover
     public const MODEL_9000 = '9000';
     public const MODEL_9001 = '9001';
 
+    /**
+     * @var array<int, Pile> $piles
+     */
     private array $piles;
 
+    /**
+     * @param array<int, array<int, string>> $pilesData
+     */
     public function __construct(
         array $pilesData,
         private readonly string $model

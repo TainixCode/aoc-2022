@@ -17,6 +17,9 @@ class Pile
         $this->packages = array_reverse($packages);
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function remove(int $nb): array
     {
         $outPackages = [];
@@ -29,6 +32,9 @@ class Pile
         return $outPackages;
     }
 
+    /**
+     * @param array<int, string> $newPackages
+     */
     public function add(array $newPackages): void
     {
         $this->packages = array_merge(
@@ -37,6 +43,9 @@ class Pile
         );
     }
 
+    /**
+     * @param array<int, string> $newPackages
+     */
     public function add9001(array $newPackages): void
     {
         $this->packages = array_merge(
