@@ -6,6 +6,9 @@ class Party
 {
     private int $score = 0;
 
+    /**
+     * @param array<int, string> $data
+     */
     public function __construct(
         private array $data,
         private string $strategy
