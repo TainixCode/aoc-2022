@@ -3,16 +3,14 @@
 require './vendor/autoload.php';
 
 use Data\Reader;
-use Solutions\Day4\Assignement;
+use Solutions\Day4\Organization;
 
 $allSections = Reader::getDataForDay(4);
 
-$cpt = 0;
+$organization = new Organization($allSections);
 
-foreach ($allSections as $sectionInformations) {
-    $assignement = new Assignement($sectionInformations);
+echo $organization->getCounterContains();
 
-    $cpt += (int) $assignement->oneOverlapTheOther();
-}
+echo PHP_EOL;
 
-echo $cpt;
+echo $organization->getCounterOverlaps();
