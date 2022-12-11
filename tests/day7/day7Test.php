@@ -25,6 +25,23 @@ test('Extraction des informations pour se déplacer dans un dossier', function()
     );
 });
 
+test('Extraction des informations pour se déplacer dans un dossier - cas particulier "cd" dans le nom du dossier', function() {
+
+    $line = '$ cd dicdr4';
+
+    $command = new Command($line);
+
+    $this->assertEquals(
+        Command::CD,
+        $command->type
+    );
+
+    $this->assertEquals(
+        'dicdr4',
+        $command->information
+    );
+});
+
 test('Extraction des informations remonter d\'un dossier', function() {
 
     $line = '$ cd ..';
@@ -67,6 +84,23 @@ test('Extraction des informations détails d\'un dossier', function() {
 
     $this->assertEquals(
         'abcd',
+        $command->information
+    );
+});
+
+test('Extraction des informations détails d\'un dossier - cas particulier "dir" dans le nom du dossier', function() {
+
+    $line = 'dir abdircd2';
+
+    $command = new Command($line);
+
+    $this->assertEquals(
+        Command::DIR_INFO,
+        $command->type
+    );
+
+    $this->assertEquals(
+        'abdircd2',
         $command->information
     );
 });
