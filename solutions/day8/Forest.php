@@ -11,11 +11,6 @@ class Forest
 
     private int $xMax;
     private int $yMax;
-
-    public const LEFT_RIGHT = 'left_right';
-    public const RIGHT_LEFT = 'right_left';
-    public const TOP_BOTTOM = 'top_bottom';
-    public const BOTTOM_TOP = 'bottom_top';
      
     /**
      * @param array<int, string> $data
@@ -28,70 +23,70 @@ class Forest
         foreach ($data as $xTree => $line) {
             foreach (str_split($line) as $yTree => $heightTree) {
 
+                $heightTree = (int) $heightTree;
+
                 $counted = ($xTree == 0 || $yTree == 0 || $xTree == $this->xMax || $yTree == $this->yMax);
                 $this->trees[$xTree . '_' . $yTree] = new Tree($heightTree, $counted);
             }
         }
+
+        $this->readLinesTrees();
     }
 
-    public function readLineTree(string $type): void
+    private function readLinesTrees(): void
     {
-        if ($type === self::LEFT_RIGHT) {
-            for ($x = 0; $x <= $this->xMax; $x++) {
+        // LEFT TO RIGHT
+        for ($x = 0; $x <= $this->xMax; $x++) {
 
-                $start = 0;
+            $start = 0;
 
-                for ($y = 0; $y <= $this->yMax; $y++) {
-
-                    if ($this->trees[$x . '_' . $y]->height > $start) {
-                        $this->trees[$x . '_' . $y]->counted();
-                        $start = $this->trees[$x . '_' . $y]->height;
-                    }
-                }
-            }
-        }
-
-        if ($type === self::RIGHT_LEFT) {
-            for ($x = 0; $x <= $this->xMax; $x++) {
-
-                $start = 0;
-
-                for ($y = $this->yMax; $y >= 0; $y--) {
-
-                    if ($this->trees[$x . '_' . $y]->height > $start) {
-                        $this->trees[$x . '_' . $y]->counted();
-                        $start = $this->trees[$x . '_' . $y]->height;
-                    }
-                }
-            }
-        }
-
-        if ($type === self::TOP_BOTTOM) {
             for ($y = 0; $y <= $this->yMax; $y++) {
 
-                $start = 0;
-
-                for ($x = 0; $x <= $this->xMax; $x++) {
-
-                    if ($this->trees[$x . '_' . $y]->height > $start) {
-                        $this->trees[$x . '_' . $y]->counted();
-                        $start = $this->trees[$x . '_' . $y]->height;
-                    }
+                if ($this->trees[$x . '_' . $y]->height > $start) {
+                    $this->trees[$x . '_' . $y]->counted();
+                    $start = $this->trees[$x . '_' . $y]->height;
                 }
             }
         }
 
-        if ($type === self::BOTTOM_TOP) {
-            for ($y = 0; $y <= $this->yMax; $y++) {
+        // RIGHT TO LEFT
+        for ($x = 0; $x <= $this->xMax; $x++) {
 
-                $start = 0;
+            $start = 0;
 
-                for ($x = $this->xMax; $x >= 0; $x--) {
+            for ($y = $this->yMax; $y >= 0; $y--) {
 
-                    if ($this->trees[$x . '_' . $y]->height > $start) {
-                        $this->trees[$x . '_' . $y]->counted();
-                        $start = $this->trees[$x . '_' . $y]->height;
-                    }
+                if ($this->trees[$x . '_' . $y]->height > $start) {
+                    $this->trees[$x . '_' . $y]->counted();
+                    $start = $this->trees[$x . '_' . $y]->height;
+                }
+            }
+        }
+
+        // TOP TO BOTTOM
+        for ($y = 0; $y <= $this->yMax; $y++) {
+
+            $start = 0;
+
+            for ($x = 0; $x <= $this->xMax; $x++) {
+
+                if ($this->trees[$x . '_' . $y]->height > $start) {
+                    $this->trees[$x . '_' . $y]->counted();
+                    $start = $this->trees[$x . '_' . $y]->height;
+                }
+            }
+        }
+
+        // BOTTOM TO TOP
+        for ($y = 0; $y <= $this->yMax; $y++) {
+
+            $start = 0;
+
+            for ($x = $this->xMax; $x >= 0; $x--) {
+
+                if ($this->trees[$x . '_' . $y]->height > $start) {
+                    $this->trees[$x . '_' . $y]->counted();
+                    $start = $this->trees[$x . '_' . $y]->height;
                 }
             }
         }
@@ -108,9 +103,9 @@ class Forest
         return $nb;
     }
 
-    public function scenicScore($xStart, $yStart)
+    public function scenicScore(int $xStart, int $yStart): int
     {
-        if ($xStart == 0 || $yStart == 0) {
+        if ($xStart === 0 || $yStart === 0) {
             return 0;
         }
 
@@ -172,16 +167,17 @@ class Forest
         return $left * $right * $top * $bottom;
     }
 
-    public function getHighScenicScore()
+    public function getHighScenicScore(): int
     {
         $max = 0;
 
         for ($x = 0; $x <= $this->xMax; $x++) {
             for ($y = 0; $y <= $this->yMax; $y++) {
 
-                $scenicScore = $this->scenicScore($x, $y);
-
-                $max = max($max, $scenicScore);
+                $max = max(
+                    $max,
+                    $this->scenicScore($x, $y)
+                );
             }
         }
 

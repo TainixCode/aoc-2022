@@ -33,11 +33,6 @@ test('Part 1 : Arbres visibles depuis l\'extérieur', function() use ($forestDat
 
     $forest = new Forest($forestData);
 
-    $forest->readLineTree(Forest::LEFT_RIGHT);
-    $forest->readLineTree(Forest::RIGHT_LEFT);
-    $forest->readLineTree(Forest::TOP_BOTTOM);
-    $forest->readLineTree(Forest::BOTTOM_TOP);
-
     $this->assertEquals(
         21,
         $forest->getTotalCounted()
