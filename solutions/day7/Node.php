@@ -92,11 +92,13 @@ class Node
             'size' => $this->getTotalSize()
         ];
 
+        $childrens = [];
+
         foreach ($this->childrens as $children) {
-            $details = array_merge($details, $children->getFoldersDetails());
+            $childrens[] = $children->getFoldersDetails();
         }
 
-        return $details;
+        return array_merge($details, ...$childrens);
     }
 }
 
